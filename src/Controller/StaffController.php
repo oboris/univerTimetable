@@ -89,7 +89,7 @@ class StaffController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="staff_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="staff_delete")
      * @param Request $request
      * @param Staff $staff
      * @return Response
