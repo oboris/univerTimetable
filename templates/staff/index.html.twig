@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Staff index{% endblock %}
+
+{% block body %}
+    <h1>Staff index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FullName</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>CreatedAt</th>
+                <th>Skills</th>
+                <th>Comments</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for staff in staff %}
+            <tr>
+                <td>{{ staff.id }}</td>
+                <td>{{ staff.fullName }}</td>
+                <td>{{ staff.email }}</td>
+                <td>{{ staff.phone }}</td>
+                <td>{{ staff.createdAt ? staff.createdAt|date('Y-m-d') : '' }}</td>
+                <td>{{ staff.skills }}</td>
+                <td>{{ staff.comments }}</td>
+                {%  if (staff.departments != null) %}
+                    <td>
+                        {% for department in staff.departments %}
+                            {{ department.getTitle() }},
+                        {% endfor %}
+                    </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

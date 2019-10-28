@@ -30,17 +30,17 @@ class Department
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\staff", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Staff", cascade={"persist", "remove"})
      */
     private $teamLead;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\staff", inversedBy="departments")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Staff", inversedBy="departments")
      */
     private $staffs;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\company", inversedBy="departments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="departments")
      */
     private $company;
 

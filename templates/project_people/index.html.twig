@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProjectPeople index{% endblock %}
+
+{% block body %}
+    <h1>ProjectPeople index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Responsibility</th>
+                <th>Project</th>
+                <th>Staff</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project_person in project_peoples %}
+            <tr>
+                <td>{{ project_person.id }}</td>
+                <td>{{ project_person.type }}</td>
+                <td>{{ project_person.responsibility }}</td>
+                {% if project_person.project != null %}
+                    <td>{{ project_person.project.getTitle() }}</td>
+                {% endif %}
+                {% if project_person.staff != null %}
+                    <td>{{ project_person.staff.getFullName() }}</td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

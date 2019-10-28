@@ -28,12 +28,12 @@ class ProjectPeople
     private $responsibility;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\project", inversedBy="projectPeople")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="projectPeople")
      */
     private $project;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\staff", inversedBy="projectPeople")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Staff", inversedBy="projectPeople")
      */
     private $staff;
 

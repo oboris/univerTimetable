@@ -30,7 +30,7 @@ class Project
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\company", inversedBy="projects")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="projects")
      */
     private $company;
 
