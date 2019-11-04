@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/project/people")
+ * @Route("/project_people")
  */
 class ProjectPeopleController extends AbstractController
 {
