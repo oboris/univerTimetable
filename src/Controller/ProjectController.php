@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Project;
+use App\Form\ProjectType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,50 +29,68 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/new/{title}/{description}", name="project_new", methods={"GET","POST"})
-     * @param Request $request
-     * @return Response
+     * @Route("/new", name="project_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
         $project = new Project();
-        $project->setTitle($request->get("title"))
-            ->setDescription($request->get("description"));
+        $form = $this->createForm(ProjectType::class, $project);
+        $form->handleRequest($request);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($project);
-        $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($project);
+            $entityManager->flush();
 
-        return $this->redirectToRoute('project_index');
+            return $this->redirectToRoute('project_index');
+        }
+
+        return $this->render('project/new.html.twig', [
+            'project' => $project,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route("/{id}/edit/{title}/{description}", name="project_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Project $project
-     * @return Response
+     * @Route("/{id}", name="project_show", methods={"GET"})
+     */
+    public function show(Project $project): Response
+    {
+        return $this->render('project/show.html.twig', [
+            'project' => $project,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="project_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Project $project): Response
     {
-        $project->setTitle($request->get("title"))
-            ->setDescription($request->get("description"));
+        $form = $this->createForm(ProjectType::class, $project);
+        $form->handleRequest($request);
 
-        $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
 
-        return $this->redirectToRoute('project_index');
+            return $this->redirectToRoute('project_index');
+        }
+
+        return $this->render('project/edit.html.twig', [
+            'project' => $project,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route("/{id}/delete", name="project_delete")
-     * @param Request $request
-     * @param Project $project
-     * @return Response
+     * @Route("/{id}", name="project_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Project $project): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($project);
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$project->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($project);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute('project_index');
     }

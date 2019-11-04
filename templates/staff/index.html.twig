@@ -15,7 +15,7 @@
                 <th>CreatedAt</th>
                 <th>Skills</th>
                 <th>Comments</th>
-                <th>Department</th>
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -28,13 +28,10 @@
                 <td>{{ staff.createdAt ? staff.createdAt|date('Y-m-d') : '' }}</td>
                 <td>{{ staff.skills }}</td>
                 <td>{{ staff.comments }}</td>
-                {%  if (staff.departments != null) %}
-                    <td>
-                        {% for department in staff.departments %}
-                            {{ department.getTitle() }},
-                        {% endfor %}
-                    </td>
-                {% endif %}
+                <td>
+                    <a href="{{ path('staff_show', {'id': staff.id}) }}">show</a>
+                    <a href="{{ path('staff_edit', {'id': staff.id}) }}">edit</a>
+                </td>
             </tr>
         {% else %}
             <tr>
@@ -43,4 +40,6 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <a href="{{ path('staff_new') }}">Create new</a>
 {% endblock %}

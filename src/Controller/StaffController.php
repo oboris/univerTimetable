@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Department;
 use App\Entity\Staff;
+use App\Form\StaffType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,76 +29,68 @@ class StaffController extends AbstractController
     }
 
     /**
-     * @Route("/new/{full_name}/{email}/{phone}/{create_at}/{skills}/{comments}/{id_dep}",
-     *     name="staff_new", methods={"GET","POST"},
-     *     requirements={"id_dep"="\d+"})
-     * @param Request $request
-     * @return Response
+     * @Route("/new", name="staff_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
         $staff = new Staff();
+        $form = $this->createForm(StaffType::class, $staff);
+        $form->handleRequest($request);
 
-        $department = $this->getDoctrine()
-            ->getRepository(Department::class)
-            ->find($request->get("id_dep"));
-
-        if ($department != null) {
-            $staff->setFullName($request->get("full_name"))
-                ->setEmail($request->get("email"))
-                ->setPhone($request->get("phone"))
-                ->setComments($request->get("comments"))
-                ->setSkills($request->get("skills"))
-                ->addDepartment($department);
-
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($staff);
             $entityManager->flush();
+
+            return $this->redirectToRoute('staff_index');
         }
 
-        return $this->redirectToRoute('staff_index');
+        return $this->render('staff/new.html.twig', [
+            'staff' => $staff,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route("/{id}/edit/{full_name}/{email}/{phone}/{create_at}/{skills}/{comments}/{id_dep}",
-     *     name="staff_edit", methods={"GET","POST"},
-     *     requirements={"id_dep"="\d+"})
-     * @param Request $request
-     * @param Staff $staff
-     * @return Response
+     * @Route("/{id}", name="staff_show", methods={"GET"})
+     */
+    public function show(Staff $staff): Response
+    {
+        return $this->render('staff/show.html.twig', [
+            'staff' => $staff,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="staff_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Staff $staff): Response
     {
+        $form = $this->createForm(StaffType::class, $staff);
+        $form->handleRequest($request);
 
-        $department = $this->getDoctrine()
-            ->getRepository(Department::class)
-            ->find($request->get("id_dep"));
-
-        if ($department != null) {
-            $staff->setFullName($request->get("full_name"))
-                ->setEmail($request->get("email"))
-                ->setPhone($request->get("phone"))
-                ->setComments($request->get("comments"))
-                ->setSkills($request->get("skills"))
-                ->addDepartment($department);
-
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('staff_index');
         }
 
-        return $this->redirectToRoute('staff_index');
+        return $this->render('staff/edit.html.twig', [
+            'staff' => $staff,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route("/{id}/delete", name="staff_delete")
-     * @param Request $request
-     * @param Staff $staff
-     * @return Response
+     * @Route("/{id}", name="staff_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Staff $staff): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($staff);
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$staff->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($staff);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute('staff_index');
     }

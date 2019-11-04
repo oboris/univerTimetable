@@ -11,8 +11,7 @@
                 <th>Id</th>
                 <th>Type</th>
                 <th>Responsibility</th>
-                <th>Project</th>
-                <th>Staff</th>
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,19 +20,18 @@
                 <td>{{ project_person.id }}</td>
                 <td>{{ project_person.type }}</td>
                 <td>{{ project_person.responsibility }}</td>
-                {% if project_person.project != null %}
-                    <td>{{ project_person.project.getTitle() }}</td>
-                {% endif %}
-                {% if project_person.staff != null %}
-                    <td>{{ project_person.staff.getFullName() }}</td>
-                {% endif %}
+                <td>
+                    <a href="{{ path('project_people_show', {'id': project_person.id}) }}">show</a>
+                    <a href="{{ path('project_people_edit', {'id': project_person.id}) }}">edit</a>
+                </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
+    <a href="{{ path('project_people_new') }}">Create new</a>
 {% endblock %}

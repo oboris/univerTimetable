@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Company;
 use App\Entity\Department;
+use App\Form\DepartmentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,62 +29,70 @@ class DepartmentController extends AbstractController
     }
 
     /**
-     * @Route("/new/{title}/{description}/{id_company}", name="department_new", methods={"GET","POST"}, requirements={"id"="\d+"})
+     * @Route("/new", name="department_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
     public function new(Request $request): Response
     {
         $department = new Department();
+        $form = $this->createForm(DepartmentType::class, $department);
+        $form->handleRequest($request);
 
-        $company = $this->getDoctrine()
-            ->getRepository(Company::class)
-            ->find($request->get("id_company"));
-        if ($company != null) {
-            $department->setTitle($request->get("title"))
-                ->setDescription($request->get("description"))
-                ->setCompany($company);
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($department);
             $entityManager->flush();
+
+            return $this->redirectToRoute('department_index');
         }
 
-        return $this->redirectToRoute('department_index');
+        return $this->render('department/new.html.twig', [
+            'department' => $department,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route("/{id}/edit/{title}/{description}/{id_company}", name="department_edit", methods={"GET","POST"},
-     *     requirements={"id"="\d+", "id_company"="\d+"})
-     * @param Request $request
-     * @param Department $department
-     * @return Response
+     * @Route("/{id}", name="department_show", methods={"GET"})
+     */
+    public function show(Department $department): Response
+    {
+        return $this->render('department/show.html.twig', [
+            'department' => $department,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="department_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Department $department): Response
     {
-        $company = $this->getDoctrine()
-            ->getRepository(Company::class)
-            ->find($request->get("id_company"));
-        if ($company != null) {
-            $department->setTitle($request->get("title"))
-                ->setDescription($request->get("description"))
-                ->setCompany($company);
+        $form = $this->createForm(DepartmentType::class, $department);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('department_index');
         }
 
-        return $this->redirectToRoute('department_index');
+        return $this->render('department/edit.html.twig', [
+            'department' => $department,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route("/{id}/delete", name="department_delete")
-     * @param Request $request
-     * @param Department $department
-     * @return Response
+     * @Route("/{id}", name="department_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Department $department): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($department);
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$department->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($department);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute('department_index');
     }
