@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProjectPeople{% endblock %}
+
+{% block body %}
+    <h1>ProjectPeople</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ project_person.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ project_person.type }}</td>
+            </tr>
+            <tr>
+                <th>Responsibility</th>
+                <td>{{ project_person.responsibility }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('project_people_index') }}">back to list</a>
+
+    <a href="{{ path('project_people_edit', {'id': project_person.id}) }}">edit</a>
+
+    {{ include('project_people/_delete_form.html.twig') }}
+{% endblock %}
