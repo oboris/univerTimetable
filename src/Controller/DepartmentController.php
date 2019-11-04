@@ -55,6 +55,8 @@ class DepartmentController extends AbstractController
 
     /**
      * @Route("/{id}", name="department_show", methods={"GET"})
+     * @param Department $department
+     * @return Response
      */
     public function show(Department $department): Response
     {
@@ -65,6 +67,9 @@ class DepartmentController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="department_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Department $department
+     * @return Response
      */
     public function edit(Request $request, Department $department): Response
     {
@@ -85,6 +90,9 @@ class DepartmentController extends AbstractController
 
     /**
      * @Route("/{id}", name="department_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Department $department
+     * @return Response
      */
     public function delete(Request $request, Department $department): Response
     {

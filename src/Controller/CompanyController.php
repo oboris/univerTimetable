@@ -67,6 +67,9 @@ class CompanyController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Company $company
+     * @return Response
      */
     public function edit(Request $request, Company $company): Response
     {
@@ -87,6 +90,9 @@ class CompanyController extends AbstractController
 
     /**
      * @Route("/{id}", name="company_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Company $company
+     * @return Response
      */
     public function delete(Request $request, Company $company): Response
     {

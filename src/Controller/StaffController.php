@@ -30,6 +30,8 @@ class StaffController extends AbstractController
 
     /**
      * @Route("/new", name="staff_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -53,6 +55,8 @@ class StaffController extends AbstractController
 
     /**
      * @Route("/{id}", name="staff_show", methods={"GET"})
+     * @param Staff $staff
+     * @return Response
      */
     public function show(Staff $staff): Response
     {
@@ -63,6 +67,9 @@ class StaffController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="staff_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Staff $staff
+     * @return Response
      */
     public function edit(Request $request, Staff $staff): Response
     {
@@ -83,6 +90,9 @@ class StaffController extends AbstractController
 
     /**
      * @Route("/{id}", name="staff_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Staff $staff
+     * @return Response
      */
     public function delete(Request $request, Staff $staff): Response
     {

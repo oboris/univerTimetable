@@ -30,6 +30,8 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/new", name="project_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -53,6 +55,8 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{id}", name="project_show", methods={"GET"})
+     * @param Project $project
+     * @return Response
      */
     public function show(Project $project): Response
     {
@@ -63,6 +67,9 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="project_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Project $project
+     * @return Response
      */
     public function edit(Request $request, Project $project): Response
     {
@@ -83,6 +90,9 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{id}", name="project_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Project $project
+     * @return Response
      */
     public function delete(Request $request, Project $project): Response
     {
