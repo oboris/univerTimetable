@@ -1,3 +1,7 @@
+index:
+    path: /
+    controller: App\Controller\MainController::index
+
 yaml_action:
     path: /yaml/{optionalParam?optional}
     controller: App\Controller\HomeWorkController::yamlAction
