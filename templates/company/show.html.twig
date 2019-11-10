@@ -5,16 +5,26 @@
 {% block body %}
     <h1>Company</h1>
 
-    <table class="table">
+    <table class="blueTable">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ company.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ company.title }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ company.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ company.title }}</td>
+        </tr>
+        <tr>
+            <th>Departments</th>
+            <td>
+                {% for department in company.departments %}
+                    <a href="{{ path("department_show", {'id': department.id }) }}">{{ department }} </a>
+                {% else %}
+                    Departments is absent
+                {% endfor %}
+            </td>
+        </tr>
         </tbody>
     </table>
 
