@@ -35,7 +35,7 @@ class Department
     private $teamLead;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Staff", inversedBy="departments")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Staff", inversedBy="departments", cascade={"persist"})
      */
     private $staffs;
 

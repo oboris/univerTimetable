@@ -36,7 +36,7 @@ class Staff
     private $phone;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="date", nullable=false)
      */
     private $createdAt;
 
@@ -51,7 +51,7 @@ class Staff
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Department", mappedBy="staffs")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Department", mappedBy="staffs", cascade={"persist"})
      */
     private $departments;
 
