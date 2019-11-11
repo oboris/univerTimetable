@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}ProjectPeople{% endblock %}
+{% block title %}Project People{% endblock %}
 
 {% block body %}
-    <h1>ProjectPeople</h1>
+    <h1>Project People</h1>
 
     <table class="blueTable">
         <tbody>
@@ -18,6 +18,14 @@
             <tr>
                 <th>Responsibility</th>
                 <td>{{ project_person.responsibility }}</td>
+            </tr>
+            <tr>
+                <th>Project</th>
+                <td>{{ project_person.project }}</td>
+            </tr>
+            <tr>
+                <th>Staff</th>
+                <td>{{ project_person.staff }}</td>
             </tr>
         </tbody>
     </table>

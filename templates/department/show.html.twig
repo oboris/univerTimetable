@@ -3,9 +3,20 @@
 {% block title %}Department{% endblock %}
 
 {% block body %}
-    <h1>Department (<a href="{{ path('company_show', {'id': department.company.id}) }}">{{ department.company }}</a>)
+    <h1>Department
+        {% if department.company %}
+            of Company (<a href="{{ path('company_show', {'id': department.company.id}) }}">{{ department.company }}</a>)
+        {% endif %}
     </h1>
-    <h2>Team Lead (<a href="{{ path('staff_show', {'id': department.teamLead.id}) }}">{{ department.teamLead }}</a>)
+
+    <h2>
+        Team Lead (
+        {% if department.teamLead %}
+            <a href="{{ path('staff_show', {'id': department.teamLead.id}) }}">{{ department.teamLead }}</a>
+        {% else %}
+            -
+        {% endif %}
+        )
     </h2>
 
     <table class="blueTable">
