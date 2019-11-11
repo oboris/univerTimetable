@@ -3,7 +3,7 @@
 {% block title %}Department{% endblock %}
 
 {% block body %}
-    <h1>Department</h1>
+    <h1>Department (<a href="{{ path('company_show', {'id': department.company.id}) }}">{{ department.company }}</a>)</h1>
 
     <table class="blueTable">
         <tbody>
