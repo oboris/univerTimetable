@@ -7,13 +7,14 @@
 
     <table class="blueTable">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Company</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Company</th>
+            <th>Team Lead</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for department in departments %}
@@ -22,6 +23,13 @@
                 <td>{{ department.title }}</td>
                 <td>{{ department.description }}</td>
                 <td><a href="{{ path('company_show', {'id': department.company.id}) }}">{{ department.company }}</a></td>
+                <td>
+                {% if department.teamLead %}
+                    <a href="{{ path('staff_show', {'id': department.teamLead.id}) }}">{{ department.teamLead }}</a>
+                {% else %}
+                    -
+                {% endif %}
+                </td>
                 <td>
                     <a href="{{ path('department_show', {'id': department.id}) }}">show</a>
                     <a href="{{ path('department_edit', {'id': department.id}) }}">edit</a>
