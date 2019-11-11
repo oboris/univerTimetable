@@ -3,22 +3,37 @@
 {% block title %}Department{% endblock %}
 
 {% block body %}
-    <h1>Department (<a href="{{ path('company_show', {'id': department.company.id}) }}">{{ department.company }}</a>)</h1>
+    <h1>Department (<a href="{{ path('company_show', {'id': department.company.id}) }}">{{ department.company }}</a>)
+    </h1>
+    <h2>Team Lead (<a href="{{ path('staff_show', {'id': department.teamLead.id}) }}">{{ department.teamLead }}</a>)
+    </h2>
 
     <table class="blueTable">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ department.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ department.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ department.description }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ department.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ department.title }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ department.description }}</td>
+        </tr>
+        <tr>
+            <th>Staffs</th>
+            <td>
+                {% for staff in department.staffs %}
+
+                    <a href="{{ path('staff_show', {'id': staff.id}) }}">{{ staff }}</a>
+
+                {% else %}
+                    -
+                {% endfor %}
+            </td>
+        </tr>
         </tbody>
     </table>
 
