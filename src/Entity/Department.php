@@ -102,6 +102,7 @@ class Department
     {
         if (!$this->staffs->contains($staff)) {
             $this->staffs[] = $staff;
+            $staff->addDepartment($this);
         }
 
         return $this;
