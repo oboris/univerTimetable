@@ -22,7 +22,11 @@
                 <td>{{ department.id }}</td>
                 <td>{{ department.title }}</td>
                 <td>{{ department.description }}</td>
-                <td><a href="{{ path('company_show', {'id': department.company.id}) }}">{{ department.company }}</a></td>
+                <td>
+                    {% if department.company %}
+                        <a href="{{ path('company_show', {'id': department.company.id}) }}">{{ department.company }}</a>
+                    {% endif %}
+                </td>
                 <td>
                 {% if department.teamLead %}
                     <a href="{{ path('staff_show', {'id': department.teamLead.id}) }}">{{ department.teamLead }}</a>
