@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Department;
 use App\Entity\Staff;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +20,11 @@ class StaffType extends AbstractType
             ->add('createdAt')
             ->add('skills')
             ->add('comments')
-            ->add('departments')
+            ->add('departments', EntityType::class, [
+                'class' => Department::class,
+                'by_reference' => false,
+                'multiple' => true
+            ])
         ;
     }
 
